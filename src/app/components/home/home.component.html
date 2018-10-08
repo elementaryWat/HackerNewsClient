@@ -1,0 +1,9 @@
+<div *ngFor="let link of links | async">
+  <div class="card" style="width: 100%; margin-top: 10px">
+    <div class="card-body">
+      <h5 class="card-title">{{link.url}}</h5>
+      <p class="card-text">{{link.description}}</p>
+      <!-- <a href="{{course.url}}" class="card-link">Go to link ...</a> -->
+    </div>
+  </div>
+</div>
