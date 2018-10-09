@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Apollo } from 'apollo-angular';
-import { map } from 'rxjs/operators';
-import gql from 'graphql-tag';
 
 import { Link, User, Query } from '../../types';
 import { MatDialog } from '@angular/material';
 import { AgregarEditarLinkComponent } from '../links/agregar-editar-link/agregar-editar-link.component';
+import { LinkService } from 'src/app/services/link.service';
 
 @Component({
   selector: 'app-home',
@@ -15,24 +13,10 @@ import { AgregarEditarLinkComponent } from '../links/agregar-editar-link/agregar
 })
 export class HomeComponent implements OnInit {
   links: Observable<Link[]>;
-  constructor(private apollo: Apollo, public dialog: MatDialog) { }
+  constructor(private linkService:LinkService, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.links = this.apollo.watchQuery<Query>({
-      query: gql`
-        query feed {
-          feed {
-            id
-            description
-            url
-          }
-        }
-      `
-    })
-      .valueChanges
-      .pipe(
-        map(result => result.data.feed)
-      );
+    this.links = this.linkService.getLinks();
   }
 
   openDialog(): void {

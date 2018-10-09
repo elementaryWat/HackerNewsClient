@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LinkService } from 'src/app/services/link.service';
 
 @Component({
   selector: 'app-agregar-editar-link',
@@ -10,7 +11,7 @@ export class AgregarEditarLinkComponent implements OnInit {
 
   formAgregarEditarLink:FormGroup;
 
-  constructor() {
+  constructor(private linkService:LinkService) {
     this.crearFormAgregarEditarLink();
    }
 
@@ -20,15 +21,17 @@ export class AgregarEditarLinkComponent implements OnInit {
   crearFormAgregarEditarLink(){
     this.formAgregarEditarLink=new FormGroup({
       'id':new FormControl(''),
-      'nombre':new FormControl('',Validators.required),
-      'descripcion':new FormControl('',Validators.required),
+      'description':new FormControl('',Validators.required),
       'url':new FormControl('',Validators.required),
     })
   }
 
   agregarLink(){
-    console.log(this.formAgregarEditarLink.value);
-    
+    this.linkService.insertLink(this.formAgregarEditarLink.value.url, this.formAgregarEditarLink.value.description)
+      .subscribe(data=>{
+        console.log(data);
+        
+      })
   }
 
 }
