@@ -1,0 +1,21 @@
+
+
+<h2 mat-dialog-title>Agregar Link</h2>
+<mat-dialog-content class="form-container">
+
+  <form [formGroup]="formAgregarEditarLink" (ngSubmit)="agregarLink()" >
+    <mat-form-field>
+      <input matInput placeholder="Link">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Nombre">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Descripcion"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Agregar</button>
+</mat-dialog-actions>

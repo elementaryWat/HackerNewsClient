@@ -6,24 +6,42 @@ import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import {ApolloLink} from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { Routes, RouterModule } from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatListModule, MatButtonModule, MatToolbarModule, MatIconModule, MatFormFieldModule, MatDialogModule, MatFormFieldControl, MatInputModule} from '@angular/material';
 
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './app.routes';
+import { AgregarEditarLinkComponent } from './components/links/agregar-editar-link/agregar-editar-link.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    AgregarEditarLinkComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ApolloModule,
     HttpLinkModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+
+    FormsModule,
+    ReactiveFormsModule,
+
+    MatListModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule
   ],
+  entryComponents:[AgregarEditarLinkComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

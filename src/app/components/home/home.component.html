@@ -1,9 +1,16 @@
-<div *ngFor="let link of links | async">
-  <div class="card" style="width: 100%; margin-top: 10px">
-    <div class="card-body">
-      <h5 class="card-title">{{link.url}}</h5>
-      <p class="card-text">{{link.description}}</p>
-      <!-- <a href="{{course.url}}" class="card-link">Go to link ...</a> -->
-    </div>
-  </div>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Links</span>
+    <span class="example-spacer"></span>
+    <button  mat-icon-button (click)="openDialog()"><i class="fas fa-plus"></i></button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="container">
+
+  <mat-list>
+    <mat-list-item *ngFor="let link of links | async">
+      <h4 mat-line>{{link.url}}</h4>
+      <p mat-line> {{link.description}} </p>
+    </mat-list-item>
+  </mat-list>
 </div>
