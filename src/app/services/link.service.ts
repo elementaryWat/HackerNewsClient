@@ -24,18 +24,20 @@ export class LinkService {
   }
 
   insertLink(url:string, description:string){
+    console.log(url,description);
+    
     return this.apollo.mutate({
       mutation: CREATE_LINK_MUTATION,
       variables: {
-        description: description,
-        url: url
+        url: url,
+        description: description
       },
-      update: (store, { data: { createLink } }) => {
+      update: (store, { data: { post } }) => {
         const data: any = store.readQuery({
           query: ALL_LINKS_QUERY
         });
 
-        data.allLinks.push(createLink);
+        data.feed.push(post);
         store.writeQuery({ query: ALL_LINKS_QUERY, data })
       }
     })

@@ -56,7 +56,7 @@ export class AppModule {
       operation.setContext({
         headers: new HttpHeaders().set(
           'Authorization',
-         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJmaXJzdEdSQVBIUUxzZXJ2aWNlQGhhY2tlck5ld3MiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTM4Njc5NzAzLCJleHAiOjE1MzkyODQ1MDN9.FBmEiDBMFj6aeNQNUnN6Axkc-e1frexmlocCBHOYUuI',
+         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiY2ptdXdlN3JiOGk4bTBiNDhzMG1qdjR5byIsImlhdCI6MTUzOTY5NjYwOX0.TwttPsjcJTZiHcY7vBDXq2jve7HRVdXSiWfRaSNHikU',
         )
       });
       return forward(operation);

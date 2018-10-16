@@ -1,14 +1,12 @@
 import gql from 'graphql-tag';
 
 export const CREATE_LINK_MUTATION = gql`
-  # 2
-  mutation post($url: String!, $description: String!) {
+   mutation post($url: String!, $description: String!) {
     post(
       url: $url,
       description: $description
     ) {
       id
-      createdAt
       url
       description
     }
