@@ -1,0 +1,29 @@
+<div class="container main-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Identificate</h3>
+      <div class="alert alert-danger" role="alert" *ngIf="hayErrorLogin">
+        {{errorMsgL}}
+      </div>
+      <form [formGroup]="formLogin" (ngSubmit)="login()">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="alguien@example.com" formControlName="email" name="name" required>
+            <mat-error *ngIf="formLogin.controls['email'].errors?.pattern">Formato de correo no valido</mat-error>
+            <mat-error *ngIf="formLogin.controls['email'].errors?.required">Debe ingresar su email</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="********" formControlName="password" name="password" required>
+            <mat-error *ngIf="formLogin.controls['password'].errors?.required">Debe ingresar la contraseña</mat-error>
+          </mat-form-field>
+        </div>
+        <!-- TODO: This is for server side, there is another version for browser defaults -->
+        <button type="submit" class="btn btn-outline-primary" [disabled]="formLogin.invalid">Ingresar</button>
+      </form>
+    </div>
+  </div>
+</div>

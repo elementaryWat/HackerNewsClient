@@ -15,12 +15,14 @@ import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './app.routes';
 import { AgregarEditarLinkComponent } from './components/links/agregar-editar-link/agregar-editar-link.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AgregarEditarLinkComponent
+    AgregarEditarLinkComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
