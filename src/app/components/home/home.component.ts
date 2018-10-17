@@ -22,13 +22,19 @@ export class HomeComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(AgregarEditarLinkComponent, {
       width: '250px',
-      /* data: {name: this.name, animal: this.animal} */
+      data: {mode:'add'}
     });
 
     /* dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.animal = result;
     }); */
+  }
+  openDialogEdit(link:Link){
+    const dialogRef = this.dialog.open(AgregarEditarLinkComponent, {
+      width: '250px',
+      data: {mode:'edit',link:link}
+    });
   }
 
 }

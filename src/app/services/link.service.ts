@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { Query } from '../types';
 
 import { map } from 'rxjs/operators';
-import { CREATE_LINK_MUTATION, ALL_LINKS_QUERY } from './graphql';
+import { CREATE_LINK_MUTATION, ALL_LINKS_QUERY, UPDATE_LINK_MUTATION } from './graphql';
 
 
 @Injectable({
@@ -38,6 +38,26 @@ export class LinkService {
         });
 
         data.feed.push(post);
+        store.writeQuery({ query: ALL_LINKS_QUERY, data })
+      }
+    })
+  }
+
+  updateLink(id:string, url:string, description:string){
+
+    return this.apollo.mutate({
+      mutation: UPDATE_LINK_MUTATION,
+      variables: {
+        id: id,
+        url: url,
+        description: description
+      },
+      update: (store, { data: { updateLink } }) => {
+        const data: any = store.readQuery({
+          query: ALL_LINKS_QUERY
+        });
+
+        data.feed.push(updateLink);
         store.writeQuery({ query: ALL_LINKS_QUERY, data })
       }
     })

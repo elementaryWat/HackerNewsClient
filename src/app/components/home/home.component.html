@@ -9,7 +9,14 @@
 
   <mat-list>
     <mat-list-item *ngFor="let link of links | async">
-      <h4 mat-line>{{link.url}}</h4>
+      <h4 mat-line>{{link.url}}
+      </h4>
+      <button mat-icon-button class="float-right">
+        <i class="fas fa-heart"></i>
+      </button>
+      <button mat-icon-button class="float-right" (click)="openDialogEdit(link)">
+        <i class="fas fa-edit"></i>
+      </button>
       <p mat-line> {{link.description}} </p>
     </mat-list-item>
   </mat-list>
