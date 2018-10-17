@@ -8,7 +8,12 @@ export const CREATE_LINK_MUTATION = gql`
     ) {
       id
       url
-      description
+      description, 
+      votes{
+        user{
+          name, email
+        }
+      }
     }
   }
 `;
@@ -22,7 +27,29 @@ export const UPDATE_LINK_MUTATION = gql`
     ) {
       id
       url
-      description
+      description, 
+      votes{
+        user{
+          name, email
+        }
+      }
+      
+    }
+  }
+`;
+
+export const VOTE_LINK_MUTATION = gql`
+   mutation createVote($link_id: ID!) {
+    createVote(
+      link_id: $link_id,
+    ) {
+        id, link{
+        id, url, description, votes{
+          user{
+            name, email
+          }
+        }
+      }
     }
   }
 `;
@@ -32,7 +59,12 @@ query feed {
   feed {
     id
     description
-    url
+    url, 
+    votes{
+      user{
+        name, email
+      }
+    }
   }
 }
 `;

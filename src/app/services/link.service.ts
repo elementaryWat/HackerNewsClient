@@ -19,7 +19,11 @@ export class LinkService {
     })
       .valueChanges
       .pipe(
-        map(result => result.data.feed)
+        map(result => {
+          
+          console.log(result.data.feed);
+          return result.data.feed
+        })
       );
   }
 
