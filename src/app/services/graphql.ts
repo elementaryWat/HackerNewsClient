@@ -26,8 +26,9 @@ export const CREATE_LINK_MUTATION = gql`
       url
       description, 
       votes{
+        id
         user{
-          name, email
+          id, name, email
         }
       }
     }
@@ -45,8 +46,9 @@ export const UPDATE_LINK_MUTATION = gql`
       url
       description, 
       votes{
+        id
         user{
-          name, email
+          id, name, email
         }
       }
       
@@ -55,17 +57,28 @@ export const UPDATE_LINK_MUTATION = gql`
 `;
 
 export const VOTE_LINK_MUTATION = gql`
-   mutation createVote($link_id: ID!) {
+   mutation createVote($link_id: String!) {
     createVote(
       link_id: $link_id,
     ) {
         id, link{
         id, url, description, votes{
+          id
           user{
-            name, email
+            id, name, email
           }
         }
       }
+    }
+  }
+`;
+
+export const DOWNVOTE_LINK_MUTATION = gql`
+   mutation deleteVote($vote_id: ID!) {
+    deleteVote(
+      vote_id: $vote_id,
+    ) {
+        id
     }
   }
 `;
@@ -77,8 +90,9 @@ query feed {
     description
     url, 
     votes{
+      id
       user{
-        name, email
+        id, name, email
       }
     }
   }

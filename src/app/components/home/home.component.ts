@@ -5,6 +5,9 @@ import { Link, User, Query } from '../../types';
 import { MatDialog } from '@angular/material';
 import { AgregarEditarLinkComponent } from '../links/agregar-editar-link/agregar-editar-link.component';
 import { LinkService } from 'src/app/services/link.service';
+import { UserService } from 'src/app/services/user.service';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +15,44 @@ import { LinkService } from 'src/app/services/link.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  links: Observable<Link[]>;
-  constructor(private linkService:LinkService, public dialog: MatDialog) { }
+  links:Link[]=[];
+  constructor(private linkService:LinkService,
+    public userService:UserService,
+     public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.links = this.linkService.getLinks();
+    this.linkService.getLinks().subscribe(links=>{
+      this.links = _.map(links,(link)=>({
+        ...link,
+        votedByMe: _.includes(_.map(link.votes,(vote)=>{
+          return vote.user.id==this.userService.currentUser.id
+        }),true),
+        myVote: _.find(_.map(link.votes,(vote)=>{
+          return {
+            user_id:vote.user.id,
+            vote_id:vote.id
+          };
+        }), (voteFromUser)=>{
+          return voteFromUser.user_id=this.userService.currentUser.id;
+        })
+      }));
+      console.log(this.links);
+
+    })
+  }
+
+  voteLink(link_id:string){
+    this.linkService.voteLink(link_id).subscribe(data=>{
+      console.log(data);
+      
+    })
+  }
+
+  downvoteLink(vote_id:string, link_id:string){
+    this.linkService.downvoteLink(vote_id,link_id).subscribe(data=>{
+      console.log(data);
+      
+    })
   }
 
   openDialog(): void {

@@ -4,6 +4,7 @@ export type Link = {
     url: string;
     postedBy: User;
     votes: Vote[];
+    votedByMe:boolean;
 }
 
 export type Vote = {

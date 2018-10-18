@@ -2,22 +2,26 @@
   <mat-toolbar-row>
     <span>Links</span>
     <span class="example-spacer"></span>
-    <button  mat-icon-button (click)="openDialog()"><i class="fas fa-plus"></i></button>
+    <button mat-icon-button (click)="openDialog()"><i class="fas fa-plus"></i></button>
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="container">
 
   <mat-list>
-    <mat-list-item *ngFor="let link of links | async">
+    <mat-list-item *ngFor="let link of links">
       <h4 mat-line>{{link.url}}
       </h4>
-      <button mat-icon-button class="float-right">
+      <button mat-icon-button class="float-right" (click)="voteLink(link.id)" *ngIf="!link.votedByMe">
+        <i class="far fa-heart"></i>
+      </button>
+      <button mat-icon-button class="float-right" (click)="downvoteLink(link.myVote.vote_id,link.id)" *ngIf="link.votedByMe" >
         <i class="fas fa-heart"></i>
       </button>
       <button mat-icon-button class="float-right" (click)="openDialogEdit(link)">
         <i class="fas fa-edit"></i>
       </button>
       <p mat-line> {{link.description}} </p>
+      <p mat-line> {{link.votes.length}} me gusta </p>
     </mat-list-item>
   </mat-list>
 </div>
