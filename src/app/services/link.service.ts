@@ -99,7 +99,7 @@ export class LinkService {
         let indexLink=_.findIndex(data.feed,{id:link_id});
         let indexVote=_.findIndex(data.feed[indexLink].votes,{id:vote_id});
         //Actualiza los votos del link en la cache
-        data.feed[indexLink].votes.splice(indexVote);
+        data.feed[indexLink].votes.splice(indexVote,1);
         store.writeQuery({ query: ALL_LINKS_QUERY, data })
       }
     })

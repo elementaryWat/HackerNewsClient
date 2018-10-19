@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app.routes';
 import { AgregarEditarLinkComponent } from './components/links/agregar-editar-link/agregar-editar-link.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -50,24 +51,32 @@ import { LoginComponent } from './components/login/login.component';
 
 export class AppModule {
 
-  constructor(apollo:Apollo, httpLink:HttpLink){
+  constructor(apollo:Apollo, httpLink:HttpLink,
+               private userProvider:UserService ){
     const http = httpLink.create({
       uri: 'http://localhost:4000'
     });
-    const middleware = new ApolloLink((operation, forward) => {
-      operation.setContext({
-        headers: new HttpHeaders().set(
-          'Authorization',
-         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiY2ptdXdlN3JiOGk4bTBiNDhzMG1qdjR5byIsImlhdCI6MTUzOTY5NjYwOX0.TwttPsjcJTZiHcY7vBDXq2jve7HRVdXSiWfRaSNHikU',
-        )
-      });
-      return forward(operation);
-    });
 
-    const link = middleware.concat(http);
-    apollo.create({
-      link,
-      cache: new InMemoryCache()
-    });
+    userProvider.estadoLogged.subscribe(logged=>{
+      if(logged){
+        console.log(this.userProvider.currentToken);
+        
+        const middleware = new ApolloLink((operation, forward) => {
+          operation.setContext({
+            headers: new HttpHeaders().set(
+              'Authorization',
+             `Bearer ${userProvider.currentToken}`,
+            )
+          });
+          return forward(operation);
+        });
+    
+        const link = middleware.concat(http);
+        apollo.create({
+          link,
+          cache: new InMemoryCache()
+        });
+      }
+    })
   }
  }

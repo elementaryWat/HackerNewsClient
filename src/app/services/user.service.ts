@@ -55,11 +55,13 @@ export class UserService {
 
   isLogged():BehaviorSubject<any>{
     let currentLoginU=localStorage.getItem("user");
+    let currentLoginT=localStorage.getItem("token");
     if(this.currentUser){
       this.estadoLogged.next(true);
     }else{
       if(currentLoginU){
         this.currentUser=JSON.parse(currentLoginU);
+        this.currentToken=currentLoginT;
         this.estadoLogged.next(true);        
       }else{
         this.estadoLogged.next(false);                
