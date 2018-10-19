@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
             vote_id:vote.id
           };
         }), (voteFromUser)=>{
-          return voteFromUser.user_id=this.userService.currentUser.id;
+          return voteFromUser.user_id==this.userService.currentUser.id;
         })
       }));
       console.log(this.links);
