@@ -17,6 +17,7 @@ import { AgregarEditarLinkComponent } from './components/links/agregar-editar-li
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { UserService } from './services/user.service';
+import ApolloClient from 'apollo-client';
 
 @NgModule({
   declarations: [
@@ -50,18 +51,20 @@ import { UserService } from './services/user.service';
 })
 
 export class AppModule {
-
   constructor(apollo:Apollo, httpLink:HttpLink,
                private userProvider:UserService ){
     const http = httpLink.create({
       uri: 'http://localhost:4000'
     });
 
+    apollo.setClient(new ApolloClient({
+      link:http,
+      cache: new InMemoryCache()
+    }));
+
     userProvider.estadoLogged.subscribe(logged=>{
       if(logged){
-        console.log(this.userProvider.currentToken);
-        
-        const middleware = new ApolloLink((operation, forward) => {
+         let middleware = new ApolloLink((operation, forward) => {
           operation.setContext({
             headers: new HttpHeaders().set(
               'Authorization',
@@ -70,12 +73,7 @@ export class AppModule {
           });
           return forward(operation);
         });
-    
-        const link = middleware.concat(http);
-        apollo.create({
-          link,
-          cache: new InMemoryCache()
-        });
+        apollo.getClient().link=middleware.concat(http);
       }
     })
   }
