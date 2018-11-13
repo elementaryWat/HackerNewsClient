@@ -54,13 +54,14 @@ export class AppModule {
   constructor(apollo:Apollo, httpLink:HttpLink,
                private userProvider:UserService ){
     const http = httpLink.create({
-      uri: 'http://localhost:4000'
+      /* uri: 'http://localhost:4000' */
+      uri: 'https://hacker-news-api-graphql.herokuapp.com/'
     });
-
-    apollo.setClient(new ApolloClient({
+    
+    apollo.create({
       link:http,
       cache: new InMemoryCache()
-    }));
+    });
 
     userProvider.estadoLogged.subscribe(logged=>{
       if(logged){
@@ -74,6 +75,10 @@ export class AppModule {
           return forward(operation);
         });
         apollo.getClient().link=middleware.concat(http);
+        /* apollo.create({
+          link:middleware.concat(http),
+          cache: new InMemoryCache()
+        }); */
       }
     })
   }
